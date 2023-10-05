@@ -1,5 +1,42 @@
+* {
+  font-family: "Roboto", sans-serif;
+}
 .card img {
   width: 100%;
   height: 20vh;
   object-fit: cover;
+}
+
+.project-card-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.project-card-thumbnail {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.tech-icons{
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+
+@media only screen and (max-width: 768px) {
+  .project-card-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .project-card-thumbnail {
+    height: 200px;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .project-card-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }

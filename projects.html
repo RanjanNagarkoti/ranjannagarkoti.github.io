@@ -10,11 +10,17 @@
       integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
       crossorigin="anonymous"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./css/project.css" />
   </head>
   <body>
     <div class="container">
-      <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <nav class="navbar navbar-expand-lg bg-light">
         <div class="container-fluid">
           <a class="navbar-brand" href="./index.html">Ranjan</a>
           <button
@@ -47,11 +53,27 @@
       </nav>
 
       <h1 class="mt-5 mb-5">Welcome to Projects</h1>
-      <div class="d-flex flex-row flex-wrap gap-5">
-        <div class="card" style="width: 18rem">
-          <img src="./img/shell-script.webp" class="img-thumbnail" alt="..." />
-          <div class="card-body">
+      <div class="project-card-container">
+        <!-- Shell Scripting -->
+        <div class="project-card border p-2 rounded shadow">
+          <header>
+            <figure>
+              <img
+                src="./img/shell-script.webp"
+                class="img-thumbnail project-card-thumbnail"
+                alt="shell-script"
+              />
+            </figure>
+          </header>
+          <div class="project-card-body">
             <h5 class="card-title mb-3 mt-3">Address book shell script</h5>
+            <div class="d-flex">
+              <img
+                src="./img/icons/terminal.png"
+                class="tech-icons"
+                alt="shell-script-icon"
+              />
+            </div>
             <a
               href="https://git.bajratechnologies.com/Ranjan.x/address-book-shell-script"
               target="_blank"
@@ -60,14 +82,37 @@
             >
           </div>
         </div>
-        <div class="card" style="width: 18rem">
-          <img
-            src="./img/ui-ux-design-assignment.png"
-            class="img-thumbnail"
-            alt="..."
-          />
-          <div class="card-body">
+
+        <!-- UI/UX Design Assignment -->
+        <div class="project-card border p-2 rounded shadow">
+          <header>
+            <figure>
+              <img
+                src="./img/ui-ux-design-assignment.png"
+                class="img-thumbnail project-card-thumbnail"
+                alt="ui-ux-design-assignment"
+              />
+            </figure>
+          </header>
+          <div class="project-card-body">
             <h5 class="card-title mb-3 mt-3">UI/UX Design Assignment</h5>
+            <div class="d-flex mb-2">
+              <img
+                src="./img/icons/html-icon.svg"
+                class="tech-icons"
+                alt="html-5-icon"
+              />
+              <img
+                src="./img/icons/css-icon.svg"
+                class="tech-icons ms-2"
+                alt="css-3-icon"
+              />
+              <img
+                src="./img/icons/bootstrap-5-logo-icon.svg"
+                class="tech-icons ms-2"
+                alt="bootstrap-5-icon"
+              />
+            </div>
             <a
               href="https://git.bajratechnologies.com/Ranjan.x/uiux-design-assignment"
               target="_blank"
@@ -82,15 +127,42 @@
             >
           </div>
         </div>
-        <!-- Road Fighter -->
-        <div class="card" style="width: 18rem">
-          <img
-            src="./img/road-fighter-thumbnail.png"
-            class="img-thumbnail"
-            alt="road-fighter-thumbnail"
-          />
-          <div class="card-body">
+
+        <!-- Road Fighter Game -->
+        <div class="project-card border p-2 rounded shadow">
+          <header>
+            <figure>
+              <img
+                src="./img/road-fighter-thumbnail.png"
+                class="img-thumbnail project-card-thumbnail"
+                alt="road-fighter-thumbnail"
+              />
+            </figure>
+          </header>
+          <div class="project-card-body">
             <h5 class="card-title mb-3 mt-3">Road Fighter game</h5>
+            <div class="d-flex mb-2">
+              <img
+                src="./img/icons/html-icon.svg"
+                class="tech-icons"
+                alt="html-5-icon"
+              />
+              <img
+                src="./img/icons/css-icon.svg"
+                class="tech-icons ms-2"
+                alt="css-3-icon"
+              />
+              <img
+                src="./img/icons/bootstrap-5-logo-icon.svg"
+                class="tech-icons ms-2"
+                alt="bootstrap-5-icon"
+              />
+              <img
+                src="./img/icons/javascript-programming-language-icon.svg"
+                class="tech-icons ms-2"
+                alt="javascript-programming-language-icon"
+              />
+            </div>
             <a
               href="https://git.bajratechnologies.com/Ranjan.x/flappy-penguin"
               target="_blank"
@@ -107,14 +179,25 @@
         </div>
 
         <!-- Learning Ruby -->
-        <div class="card" style="width: 18rem">
-          <img
-            src="./img/learning-ruby.png"
-            class="img-thumbnail"
-            alt="learning-ruby-thumbnail"
-          />
-          <div class="card-body">
+        <div class="project-card border p-2 rounded shadow">
+          <header>
+            <figure>
+              <img
+                src="./img/learning-ruby.png"
+                class="img-thumbnail project-card-thumbnail"
+                alt="learning-ruby-thumbnail"
+              />
+            </figure>
+          </header>
+          <div class="project-card-body">
             <h5 class="card-title mb-3 mt-3">Learning Ruby</h5>
+            <div class="d-flex mb-2">
+              <img
+                src="./img/icons/ruby-programming-language-icon.svg"
+                class="tech-icons"
+                alt="html-5-icon"
+              />
+            </div>
             <a
               href="https://git.bajratechnologies.com/Ranjan.x/ruby"
               target="_blank"
@@ -125,14 +208,30 @@
         </div>
 
         <!-- Ruby cli project -->
-        <div class="card" style="width: 18rem">
-          <img
-            src="./img/ruby-cli-project.png"
-            class="img-thumbnail"
-            alt="road-fighter-thumbnail"
-          />
-          <div class="card-body">
+        <div class="project-card border p-2 rounded shadow">
+          <header>
+            <figure>
+              <img
+                src="./img/ruby-cli-project.png"
+                class="img-thumbnail project-card-thumbnail"
+                alt="road-fighter-thumbnail"
+              />
+            </figure>
+          </header>
+          <div class="project-card-body">
             <h5 class="card-title mb-3 mt-3">Ruby CLI Project</h5>
+            <div class="d-flex mb-2">
+              <img
+                src="./img/icons/ruby-programming-language-icon.svg"
+                class="tech-icons"
+                alt="html-5-icon"
+              />
+              <img
+                src="./img/icons/terminal.png"
+                class="tech-icons ms-2"
+                alt="html-5-icon"
+              />
+            </div>
             <a
               href="https://git.bajratechnologies.com/Ranjan.x/ruby-cli-crud"
               target="_blank"
@@ -143,14 +242,30 @@
         </div>
 
         <!-- Expense-tracker in ruby -->
-        <div class="card" style="width: 18rem">
-          <img
-            src="./img/expense-tracker.png"
-            class="img-thumbnail"
-            alt="road-fighter-thumbnail"
-          />
-          <div class="card-body">
+        <div class="project-card border p-2 rounded shadow">
+          <header>
+            <figure>
+              <img
+                src="./img/expense-tracker.png"
+                class="img-thumbnail project-card-thumbnail"
+                alt="road-fighter-thumbnail"
+              />
+            </figure>
+          </header>
+          <div class="project-card-body">
             <h5 class="card-title mb-3 mt-3">Expense-tracker Ruby</h5>
+            <div class="d-flex mb-2">
+              <img
+                src="./img/icons/ruby-programming-language-icon.svg"
+                class="tech-icons"
+                alt="html-5-icon"
+              />
+              <img
+                src="./img/icons/terminal.png"
+                class="tech-icons ms-2"
+                alt="html-5-icon"
+              />
+            </div>
             <a
               href="https://git.bajratechnologies.com/Ranjan.x/expense-tracker/-/tree/develop"
               target="_blank"
@@ -161,14 +276,40 @@
         </div>
 
         <!-- Learning Ruby on Rails -->
-        <div class="card" style="width: 18rem">
-          <img
-            src="./img/ruby-on-rails.png"
-            class="img-thumbnail"
-            alt="road-fighter-thumbnail"
-          />
-          <div class="card-body">
+        <div class="project-card border p-2 rounded shadow">
+          <header>
+            <figure>
+              <img
+                src="./img/ruby-on-rails.png"
+                class="img-thumbnail project-card-thumbnail"
+                alt="road-fighter-thumbnail"
+              />
+            </figure>
+          </header>
+          <div class="project-card-body">
             <h5 class="card-title mb-3 mt-3">Learning Ruby on Rails</h5>
+            <div class="d-flex mb-2">
+              <img
+                src="./img/icons/ruby-programming-language-icon.svg"
+                class="tech-icons"
+                alt="html-5-icon"
+              />
+              <img
+                src="./img/icons/ruby-on-rails-icon.svg"
+                class="tech-icons ms-2"
+                alt="html-5-icon"
+              />
+              <img
+                src="./img/icons/postgresql-icon.svg"
+                class="tech-icons ms-2"
+                alt="html-5-icon"
+              />
+              <img
+                src="./img/icons/git-icon.svg"
+                class="tech-icons ms-2"
+                alt="html-5-icon"
+              />
+            </div>
             <a
               href="https://git.bajratechnologies.com/Ranjan.x/blog"
               target="_blank"
