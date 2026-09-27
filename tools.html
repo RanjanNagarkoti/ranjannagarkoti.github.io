@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tools — Ranjan Nagarkoti</title>
+    <meta name="description" content="Small tools and utilities built by Ranjan Nagarkoti.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --ink: #0f1720;
+            --panel: #161f2b;
+            --panel-line: #26313f;
+            --paper: #eeeae1;
+            --paper-dim: #a9b0ab;
+            --amber: #e8a33d;
+            --teal: #5aa89a;
+            --radius: 10px;
+            --maxw: 820px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--ink);
+            color: var(--paper);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.5;
+            font-size: 16px;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            color: #fff;
+            margin: 0 0 .3em;
+            letter-spacing: -0.01em;
+        }
+
+        .mono {
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        a {
+            color: var(--amber);
+        }
+
+        a:focus-visible,
+        button:focus-visible {
+            outline: 2px solid var(--amber);
+            outline-offset: 2px;
+        }
+
+        .wrap {
+            max-width: var(--maxw);
+            margin: 0 auto;
+            padding: 32px 20px 80px;
+        }
+
+        .back {
+            display: inline-block;
+            color: var(--paper-dim);
+            font-size: .85rem;
+            text-decoration: none;
+            margin-bottom: 18px;
+        }
+
+        .back:hover {
+            color: var(--paper);
+        }
+
+        header.top {
+            margin-bottom: 34px;
+        }
+
+        header.top p {
+            color: var(--paper-dim);
+            max-width: 60ch;
+            margin: 6px 0 0;
+        }
+
+        .tool-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .tool-card {
+            background: var(--panel);
+            border: 1px solid var(--panel-line);
+            border-radius: var(--radius);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .tool-card .tool-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .tool-card h2 {
+            font-size: 1.15rem;
+        }
+
+        .tool-card p {
+            color: var(--paper-dim);
+            margin: 0;
+            max-width: 56ch;
+        }
+
+        .tool-card .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: .78rem;
+            border: 1px solid var(--panel-line);
+            border-radius: 6px;
+            padding: 4px 9px;
+            color: var(--paper-dim);
+        }
+
+        .host-note {
+            font-size: .78rem;
+            color: var(--paper-dim);
+        }
+
+        .cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 18px;
+            border-radius: var(--radius);
+            font-family: 'Space Grotesk';
+            font-weight: 600;
+            font-size: .92rem;
+            background: var(--amber);
+            color: #1a1206;
+            text-decoration: none;
+            align-self: flex-start;
+        }
+
+        .cta:hover {
+            background: #f0ae4c;
+        }
+
+        footer {
+            padding: 32px 0 0;
+            text-align: center;
+            color: var(--paper-dim);
+            font-size: .85rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <a class="back" href="index.html">← Back to portfolio</a>
+        <header class="top">
+            <h1>Tools</h1>
+            <p>Small utilities I've built for myself and my friends. Some run on this site, some are hosted elsewhere —
+                either way, tap in to use them.</p>
+        </header>
+
+        <div class="tool-grid">
+
+            <div class="tool-card">
+                <div class="tool-top">
+                    <div>
+                        <h2>Futsal Split Calculator</h2>
+                        <p>Split today's ground charge across players and see exactly how much you, as the collector,
+                            still need to add before paying the ground — whether people paid you in cash, online, or
+                            straight to the futsal's QR.</p>
+                    </div>
+                </div>
+                <div class="tags">
+                    <span class="tag">HTML</span><span class="tag">JavaScript</span>
+                </div>
+                <a class="cta" href="futsal-calculator.html">Open tool</a>
+            </div>
+
+            <!--
+      Add more tool cards here as they're built. For a tool hosted on a
+      different domain, just point the CTA at the full URL and it opens
+      in a new tab, e.g.:
+
+      <div class="tool-card">
+        <div class="tool-top">
+          <div>
+            <h2>Tool name</h2>
+            <p>One or two sentences on what it does and who it's for.</p>
+          </div>
+        </div>
+        <div class="tags"><span class="tag">Stack</span></div>
+        <p class="host-note">Hosted separately — opens in a new tab.</p>
+        <a class="cta" href="https://example.com/tool" target="_blank" rel="noopener">Open tool</a>
+      </div>
+    -->
+
+        </div>
+
+        <footer>More tools coming as I build them.</footer>
+    </div>
+</body>
+
+</html>

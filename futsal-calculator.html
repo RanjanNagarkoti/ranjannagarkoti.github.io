@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Futsal Split Calculator — Ranjan Nagarkoti</title>
+    <meta name="description"
+        content="Split today's futsal ground charge per player and see exactly how much the collector still needs to add before paying the ground.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --ink: #0f1720;
+            --panel: #161f2b;
+            --panel-line: #26313f;
+            --paper: #eeeae1;
+            --paper-dim: #a9b0ab;
+            --amber: #e8a33d;
+            --teal: #5aa89a;
+            --red: #d97066;
+            --blue: #7fb0e0;
+            --radius: 10px;
+            --maxw: 780px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--ink);
+            color: var(--paper);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.5;
+            font-size: 16px;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            color: #fff;
+            margin: 0 0 .3em;
+            letter-spacing: -0.01em;
+        }
+
+        .mono {
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        a {
+            color: var(--amber);
+        }
+
+        .wrap {
+            max-width: var(--maxw);
+            margin: 0 auto;
+            padding: 32px 20px 80px;
+        }
+
+        .back {
+            display: inline-block;
+            color: var(--paper-dim);
+            font-size: .85rem;
+            text-decoration: none;
+            margin-bottom: 18px;
+        }
+
+        .back:hover {
+            color: var(--paper);
+        }
+
+        header.top {
+            margin-bottom: 28px;
+        }
+
+        header.top p {
+            color: var(--paper-dim);
+            max-width: 60ch;
+            margin: 6px 0 0;
+        }
+
+        .card {
+            background: var(--panel);
+            border: 1px solid var(--panel-line);
+            border-radius: var(--radius);
+            padding: 22px;
+            margin-bottom: 20px;
+        }
+
+        .card h2 {
+            font-size: 1.05rem;
+            margin-bottom: 4px;
+        }
+
+        .card .card-sub {
+            color: var(--paper-dim);
+            font-size: .85rem;
+            margin: 0 0 16px;
+        }
+
+        .setup-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        .field label {
+            display: block;
+            font-size: .82rem;
+            color: var(--paper-dim);
+            margin-bottom: 6px;
+        }
+
+        .field input {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--panel-line);
+            background: var(--ink);
+            color: var(--paper);
+            font-size: 1rem;
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .field input:focus,
+        select:focus,
+        button:focus-visible {
+            outline: 2px solid var(--amber);
+            outline-offset: 2px;
+        }
+
+        .perhead {
+            margin-top: 16px;
+            padding: 14px 16px;
+            border-radius: 8px;
+            background: var(--ink);
+            border: 1px dashed var(--panel-line);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .perhead .label {
+            color: var(--paper-dim);
+            font-size: .85rem;
+        }
+
+        .perhead .value {
+            font-family: 'Space Grotesk';
+            color: var(--amber);
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        /* Player rows */
+        #players {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .row-head {
+            display: grid;
+            grid-template-columns: 1.3fr 1fr 1.2fr auto;
+            gap: 8px;
+            font-size: .75rem;
+            color: var(--paper-dim);
+            padding: 0 2px;
+            margin-bottom: 2px;
+        }
+
+        .player-row {
+            display: grid;
+            grid-template-columns: 1.3fr 1fr 1.2fr auto;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .player-row input,
+        .player-row select {
+            width: 100%;
+            padding: 9px 10px;
+            border-radius: 8px;
+            border: 1px solid var(--panel-line);
+            background: var(--ink);
+            color: var(--paper);
+            font-size: .92rem;
+        }
+
+        .player-row input:disabled {
+            opacity: .55;
+        }
+
+        .player-row input[type="text"] {
+            font-family: 'Inter';
+        }
+
+        .player-row input[type="number"] {
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .player-row .due-tag {
+            grid-column: 1 / -1;
+            font-size: .78rem;
+            color: var(--red);
+            margin: -4px 0 4px;
+        }
+
+        .player-row .due-tag.ok {
+            color: var(--teal);
+        }
+
+        .player-row .due-tag.self {
+            color: var(--amber);
+        }
+
+        .remove-btn {
+            background: none;
+            border: 1px solid var(--panel-line);
+            color: var(--paper-dim);
+            border-radius: 8px;
+            width: 36px;
+            height: 36px;
+            cursor: pointer;
+            font-size: 1rem;
+            line-height: 1;
+        }
+
+        .remove-btn:hover {
+            color: var(--red);
+            border-color: var(--red);
+        }
+
+        .add-row-btn {
+            margin-top: 14px;
+            background: none;
+            border: 1px dashed var(--panel-line);
+            color: var(--paper-dim);
+            border-radius: 8px;
+            padding: 10px 16px;
+            font-size: .9rem;
+            cursor: pointer;
+            width: 100%;
+            font-family: 'Space Grotesk';
+            font-weight: 600;
+        }
+
+        .add-row-btn:hover {
+            border-color: var(--amber);
+            color: var(--amber);
+        }
+
+        /* Summary */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .stat {
+            background: var(--ink);
+            border: 1px solid var(--panel-line);
+            border-radius: 8px;
+            padding: 14px 16px;
+        }
+
+        .stat span.label {
+            display: block;
+            color: var(--paper-dim);
+            font-size: .78rem;
+            margin-bottom: 4px;
+        }
+
+        .stat span.value {
+            font-family: 'Space Grotesk';
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .stat.cash span.value {
+            color: var(--teal);
+        }
+
+        .stat.online span.value {
+            color: var(--blue);
+        }
+
+        .stat.direct span.value {
+            color: var(--paper-dim);
+        }
+
+        .stat.outstanding span.value {
+            color: var(--red);
+        }
+
+        .topup-banner {
+            margin-top: 6px;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .topup-banner .label {
+            color: var(--paper-dim);
+            font-size: .85rem;
+            margin-bottom: 6px;
+        }
+
+        .topup-banner .value {
+            font-family: 'Space Grotesk';
+            font-weight: 700;
+            font-size: 1.9rem;
+        }
+
+        .topup-banner.short {
+            background: rgba(217, 112, 102, .12);
+            border: 1px solid rgba(217, 112, 102, .35);
+        }
+
+        .topup-banner.short .value {
+            color: var(--red);
+        }
+
+        .topup-banner.ok {
+            background: rgba(90, 168, 154, .12);
+            border: 1px solid rgba(90, 168, 154, .35);
+        }
+
+        .topup-banner.ok .value {
+            color: var(--teal);
+        }
+
+        .note {
+            font-size: .8rem;
+            color: var(--paper-dim);
+            margin-top: 12px;
+        }
+
+        .note strong {
+            color: var(--paper);
+        }
+
+        @media (max-width:600px) {
+            .row-head {
+                display: none;
+            }
+
+            .player-row {
+                grid-template-columns: 1fr 1fr;
+                grid-template-areas: "name name" "amount method" "remove remove";
+            }
+
+            .player-row input[data-field="name"] {
+                grid-area: name;
+            }
+
+            .player-row input[data-field="amount"] {
+                grid-area: amount;
+            }
+
+            .player-row select {
+                grid-area: method;
+            }
+
+            .remove-btn {
+                grid-area: remove;
+                justify-self: end;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <a class="back" href="tools.html">← Back to tools</a>
+        <header class="top">
+            <h1>Futsal Split Calculator</h1>
+            <p>Enter today's total charge, add every player who's playing (including yourself as the collector), and log
+                how each person paid. The banner at the bottom tells you exactly how much you personally need to add
+                before sending the full amount to the ground.</p>
+        </header>
+
+        <div class="card">
+            <h2>Today's game</h2>
+            <p class="card-sub">The per-head amount updates automatically as you add or remove players below.</p>
+            <div class="setup-grid">
+                <div class="field">
+                    <label for="totalAmount">Total to collect today (ground + water, tea, etc.)</label>
+                    <input type="number" id="totalAmount" inputmode="decimal" placeholder="e.g. 1275" min="0">
+                </div>
+            </div>
+            <div class="perhead">
+                <span class="label">Per head <span id="perHeadCount" class="mono">(0 players)</span></span>
+                <span class="value" id="perHeadValue">₹0</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Players</h2>
+            <p class="card-sub">Add yourself too — mark your own row as <strong style="color:var(--amber)">"Collector —
+                    my share"</strong> so it counts toward the per-head split without needing a payment method.</p>
+            <div class="row-head">
+                <span>Name</span><span>Amount</span><span>Paid via</span><span></span>
+            </div>
+            <div id="players"></div>
+            <button class="add-row-btn" id="addRowBtn" type="button">+ Add player</button>
+        </div>
+
+        <div class="card">
+            <h2>Summary</h2>
+            <div class="summary-grid">
+                <div class="stat cash">
+                    <span class="label">Cash in your hand</span>
+                    <span class="value" id="cashTotal">₹0</span>
+                </div>
+                <div class="stat online">
+                    <span class="label">Online, received by you</span>
+                    <span class="value" id="onlineTotal">₹0</span>
+                </div>
+                <div class="stat direct">
+                    <span class="label">Sent direct to futsal QR</span>
+                    <span class="value" id="directTotal">₹0</span>
+                </div>
+                <div class="stat outstanding">
+                    <span class="label">Still owed by other players</span>
+                    <span class="value" id="outstandingTotal">₹0</span>
+                </div>
+            </div>
+
+            <div class="topup-banner" id="topupBanner">
+                <div class="label" id="topupLabel">Add players and a total to see your top-up</div>
+                <div class="value" id="topupValue">—</div>
+            </div>
+            <p class="note" id="balanceNote"></p>
+        </div>
+    </div>
+
+    <script>
+        const totalAmountEl = document.getElementById('totalAmount');
+        const perHeadValueEl = document.getElementById('perHeadValue');
+        const perHeadCountEl = document.getElementById('perHeadCount');
+        const playersEl = document.getElementById('players');
+        const addRowBtn = document.getElementById('addRowBtn');
+
+        let players = []; // {id, name, amount, method}  method: cash | online | direct | collector
+        let uid = 0;
+
+        function currency(n) {
+            if (isNaN(n) || n === null) n = 0;
+            const sign = n < 0 ? '-' : '';
+            return sign + '₹' + Math.abs(n).toLocaleString('en-IN', { maximumFractionDigits: 2 });
+        }
+
+        function round2(n) { return Math.round(n * 100) / 100; }
+
+        function perHead() {
+            const total = parseFloat(totalAmountEl.value) || 0;
+            const count = players.length;
+            return count > 0 ? total / count : 0;
+        }
+
+        function addPlayer() {
+            players.push({ id: uid++, name: '', amount: '', method: 'cash' });
+            render();
+        }
+
+        function removePlayer(id) {
+            players = players.filter(p => p.id !== id);
+            render();
+        }
+
+        function updatePlayer(id, field, value) {
+            const p = players.find(p => p.id === id);
+            if (!p) return;
+            if (field === 'amount') {
+                p.amount = value === '' ? '' : parseFloat(value);
+            } else if (field === 'method') {
+                p.method = value;
+                if (value === 'collector') {
+                    p.amount = round2(perHead());
+                }
+            } else {
+                p.name = value;
+            }
+            render();
+        }
+
+        function render() {
+            const activeEl = document.activeElement;
+            const activeRowId = activeEl && activeEl.closest('.player-row') ? Number(activeEl.closest('.player-row').dataset.id) : null;
+            const activeField = activeEl ? activeEl.dataset.field : null;
+            const selStart = activeEl && activeEl.selectionStart != null ? activeEl.selectionStart : null;
+
+            playersEl.innerHTML = '';
+            const ph = perHead();
+
+            players.forEach(p => {
+                const row = document.createElement('div');
+                row.className = 'player-row';
+                row.dataset.id = p.id;
+
+                const isCollector = p.method === 'collector';
+                const amt = (p.amount === '' || isNaN(p.amount)) ? 0 : p.amount;
+                const due = ph ? round2(ph - amt) : 0;
+                const hasName = p.name.trim() !== '';
+
+                let tag = '';
+                if (isCollector) {
+                    tag = `<div class="due-tag self">Your share — folded into the top-up below, no transfer needed</div>`;
+                } else if (hasName && ph) {
+                    if (due > 0) tag = `<div class="due-tag">Owes ${currency(due)} more</div>`;
+                    else if (due < 0) tag = `<div class="due-tag ok">Overpaid by ${currency(-due)}</div>`;
+                    else tag = `<div class="due-tag ok">Paid in full</div>`;
+                }
+
+                row.innerHTML = `
+        <input type="text" placeholder="Name" value="${p.name.replace(/"/g, '&quot;')}" data-field="name" />
+        <input type="number" placeholder="Amount" value="${p.amount}" data-field="amount" inputmode="decimal" ${isCollector ? 'disabled' : ''} />
+        <select data-field="method">
+          <option value="cash" ${p.method === 'cash' ? 'selected' : ''}>Cash</option>
+          <option value="online" ${p.method === 'online' ? 'selected' : ''}>Online — to me</option>
+          <option value="direct" ${p.method === 'direct' ? 'selected' : ''}>Online — direct to futsal</option>
+          <option value="collector" ${isCollector ? 'selected' : ''}>Collector — my share</option>
+        </select>
+        <button class="remove-btn" type="button" aria-label="Remove player">×</button>
+        ${tag}
+      `;
+
+                row.querySelectorAll('[data-field]').forEach(inp => {
+                    inp.addEventListener('input', () => updatePlayer(p.id, inp.dataset.field, inp.value));
+                    inp.addEventListener('change', () => updatePlayer(p.id, inp.dataset.field, inp.value));
+                });
+                row.querySelector('.remove-btn').addEventListener('click', () => removePlayer(p.id));
+
+                playersEl.appendChild(row);
+            });
+
+            // restore focus after re-render
+            if (activeRowId !== null) {
+                const newRow = playersEl.querySelector(`.player-row[data-id="${activeRowId}"]`);
+                if (newRow) {
+                    const newField = newRow.querySelector(`[data-field="${activeField}"]`);
+                    if (newField && !newField.disabled) {
+                        newField.focus();
+                        if (selStart !== null && newField.setSelectionRange) {
+                            try { newField.setSelectionRange(selStart, selStart); } catch (e) { }
+                        }
+                    }
+                }
+            }
+
+            recalcSummary();
+        }
+
+        function recalcSummary() {
+            const total = parseFloat(totalAmountEl.value) || 0;
+            const ph = perHead();
+            perHeadValueEl.textContent = ph ? currency(round2(ph)) : '₹0';
+            perHeadCountEl.textContent = `(${players.length} player${players.length === 1 ? '' : 's'})`;
+
+            let cash = 0, online = 0, direct = 0, outstanding = 0, collectorShare = 0;
+            players.forEach(p => {
+                const amt = (p.amount === '' || isNaN(p.amount)) ? 0 : p.amount;
+                if (p.method === 'cash') cash += amt;
+                else if (p.method === 'online') online += amt;
+                else if (p.method === 'direct') direct += amt;
+                else if (p.method === 'collector') { collectorShare += amt; return; }
+
+                if (ph && p.name.trim() !== '') {
+                    const due = ph - amt;
+                    if (due > 0) outstanding += due;
+                }
+            });
+
+            document.getElementById('cashTotal').textContent = currency(round2(cash));
+            document.getElementById('onlineTotal').textContent = currency(round2(online));
+            document.getElementById('directTotal').textContent = currency(round2(direct));
+            document.getElementById('outstandingTotal').textContent = currency(round2(outstanding));
+
+            const banner = document.getElementById('topupBanner');
+            const label = document.getElementById('topupLabel');
+            const value = document.getElementById('topupValue');
+            const note = document.getElementById('balanceNote');
+
+            if (!total || players.length === 0) {
+                banner.className = 'topup-banner';
+                label.textContent = 'Add players and a total to see your top-up';
+                value.textContent = '—';
+                note.textContent = '';
+                return;
+            }
+
+            // Everything that still needs to reach the ground, one way or another
+            const collectedAllChannels = cash + online + direct;
+            const topUp = round2(total - collectedAllChannels);
+
+            if (topUp > 0) {
+                banner.className = 'topup-banner short';
+                label.textContent = "You need to add this much of your own money before paying the ground";
+                value.textContent = currency(topUp);
+            } else if (topUp < 0) {
+                banner.className = 'topup-banner ok';
+                label.textContent = "You're already covered — this much extra to keep or return";
+                value.textContent = currency(-topUp);
+            } else {
+                banner.className = 'topup-banner ok';
+                label.textContent = 'Exactly covered — no top-up needed';
+                value.textContent = currency(0);
+            }
+
+            const collectorNote = collectorShare > 0
+                ? ` That top-up already includes your own share of ${currency(round2(collectorShare))}.`
+                : '';
+            note.innerHTML = `The ground needs <strong>${currency(total)}</strong> in total. So far you're holding ` +
+                `<strong>${currency(round2(cash))}</strong> cash and <strong>${currency(round2(online))}</strong> online, and ` +
+                `<strong>${currency(round2(direct))}</strong> has already gone straight to the ground.` + collectorNote +
+                (outstanding > 0 ? ` ${currency(round2(outstanding))} of it is still owed by players who haven't paid their full share.` : '');
+        }
+
+        totalAmountEl.addEventListener('input', render);
+        addRowBtn.addEventListener('click', () => addPlayer());
+
+        // Start with a couple of empty rows so the form doesn't look bare
+        addPlayer();
+        addPlayer();
+    </script>
+</body>
+
+</html>
