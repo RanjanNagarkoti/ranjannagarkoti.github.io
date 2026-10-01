@@ -486,11 +486,12 @@
             const p = players.find(p => p.id === id);
             if (!p) return;
             if (field === 'amount') {
-                p.amount = value === '' ? '' : parseFloat(value);
+                p.amount = value;
             } else if (field === 'method') {
                 p.method = value;
                 if (value === 'collector') {
-                    p.amount = round2(perHead());
+                    const share = round2(perHead());
+                    p.amount = share.toFixed(2);
                 }
             } else {
                 p.name = value;
@@ -513,7 +514,7 @@
                 row.dataset.id = p.id;
 
                 const isCollector = p.method === 'collector';
-                const amt = (p.amount === '' || isNaN(p.amount)) ? 0 : p.amount;
+                const amt = parseFloat(p.amount) || 0;
                 const due = ph ? round2(ph - amt) : 0;
                 const hasName = p.name.trim() !== '';
 
@@ -528,7 +529,7 @@
 
                 row.innerHTML = `
         <input type="text" placeholder="Name" value="${p.name.replace(/"/g, '&quot;')}" data-field="name" />
-        <input type="number" placeholder="Amount" value="${p.amount}" data-field="amount" inputmode="decimal" ${isCollector ? 'disabled' : ''} />
+        <input type="text" placeholder="Amount" value="${p.amount}" data-field="amount" inputmode="decimal" ${isCollector ? 'disabled' : ''} />
         <select data-field="method">
           <option value="cash" ${p.method === 'cash' ? 'selected' : ''}>Cash</option>
           <option value="online" ${p.method === 'online' ? 'selected' : ''}>Online — to me</option>
@@ -573,7 +574,7 @@
 
             let cash = 0, online = 0, direct = 0, outstanding = 0, collectorShare = 0;
             players.forEach(p => {
-                const amt = (p.amount === '' || isNaN(p.amount)) ? 0 : p.amount;
+                const amt = parseFloat(p.amount) || 0;
                 if (p.method === 'cash') cash += amt;
                 else if (p.method === 'online') online += amt;
                 else if (p.method === 'direct') direct += amt;
