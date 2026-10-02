@@ -2,6 +2,15 @@
 <html lang="en">
 
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-METZ5B5FQX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-METZ5B5FQX');
+</script>
     <meta charset="UTF-8">
     <title>Futsal Split Calculator — Ranjan Nagarkoti</title>
     <meta name="description"
@@ -380,6 +389,13 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        footer {
+            padding: 32px 0;
+            text-align: center;
+            color: var(--paper-dim);
+            font-size: .85rem;
+        }
     </style>
 </head>
 
@@ -638,6 +654,10 @@
         addPlayer();
         addPlayer();
     </script>
+    <footer>© <span id="year"></span> Ranjan Nagarkoti. Built with HTML &amp; CSS. | <a href="/privacy.html" style="color: var(--paper-dim); text-decoration: underline;">Privacy Policy</a></footer>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 
 </html>
